@@ -1,0 +1,14 @@
+{
+  "name": "apifetch",
+  "module": "app/index.ts",
+  "type": "module",
+  "scripts": {
+    "app": "bun run app/index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
