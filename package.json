@@ -3,12 +3,16 @@
   "module": "app/index.ts",
   "type": "module",
   "scripts": {
-    "app": "bun run app/index.ts"
+    "app": "bun run app/index.ts",
+    "clean": "prettier . --write"
   },
   "devDependencies": {
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "prettier": "^3.5.3"
   }
 }
