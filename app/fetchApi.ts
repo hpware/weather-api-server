@@ -1,6 +1,6 @@
 const apiKey = process.env.CWA_API;
 const requestElement =
-  "Weather,Now,AirTemperature,RelativeHumidity,DailyHigh,DailyLow";
+  "Weather,Now,AirTemperature,RelativeHumidity,DailyHigh,DailyLow"; // If empty, then it fetches everything.
 const geoInfomation = "Coordinates,CountyName,TownName";
 
 export default async function fetchAPI(lat: string, long: string, location?: string ) {
@@ -22,7 +22,9 @@ export default async function fetchAPI(lat: string, long: string, location?: str
     },
   );
   if (!req.ok) {
-    throw new Error(`API request failed with status ${req.status}`);
+    return {
+        error: "ERR_REMOTE_API_RATE_LIMIT"
+    }
   }
   const res = await req.json();
   return res;

@@ -12,8 +12,7 @@ Bun.serve({
       const lat = req.params.lat;
       const long =  req.params.long;
       console.log(`lat: ${lat}, long: ${long}`)
-      const data = await fetchAPI(lat, long);
-      return Response.json(data);
+      return Response.json(await fetchAPI(lat, long));
     },
     "/weather/": Response.json(
       {
