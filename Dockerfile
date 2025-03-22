@@ -1,8 +1,14 @@
+# Build stage
+FROM oven/bun:1 AS builder
+WORKDIR /app
+COPY package*.json ./
+COPY bun.lock* ./
+COPY . .
+
 # Production stage
 FROM oven/bun:1-slim AS runner
 WORKDIR /app
 RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/*
-COPY --from=builder /app/dist ./dis
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/.env ./
 COPY --from=builder /app/bun.lock* ./
