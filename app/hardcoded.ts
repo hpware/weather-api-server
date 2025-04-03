@@ -1,4 +1,3 @@
-
 const apiKey = process.env.CWA_API;
 const requestElement =
   "Weather,Now,AirTemperature,RelativeHumidity,DailyHigh,DailyLow"; // If empty, then it fetches everything.
@@ -16,15 +15,15 @@ export default async function fetchAPI(stationName: string) {
   );
   if (!req.ok) {
     return {
-        error: "ERR_REMOTE_API_RATE_LIMIT"
-    }
+      error: "ERR_REMOTE_API_RATE_LIMIT",
+    };
   }
   const res = await req.json();
-  
+
   if (!res?.records?.Station?.length) {
     return {
       error: "ERR_NO_STATION_DATA",
-      message: `No data found for station: ${stationName}`
+      message: `No data found for station: ${stationName}`,
     };
   }
 
@@ -35,30 +34,36 @@ export default async function fetchAPI(stationName: string) {
     weather: weatherElement?.Weather ?? "N/A",
     temp: weatherElement?.AirTemperature ?? "N/A",
     humidity: weatherElement?.RelativeHumidity ?? "N/A",
-    highestTemp: weatherElement?.DailyExtreme?.DailyHigh?.TemperatureInfo?.AirTemperature ?? "N/A",
-    lowestTemp: weatherElement?.DailyExtreme?.DailyLow?.TemperatureInfo?.AirTemperature ?? "N/A",
-    DateTime: weatherElement?.DailyExtreme?.DailyHigh?.TemperatureInfo?.Occurred_at?.DateTime ?? "N/A"
+    highestTemp:
+      weatherElement?.DailyExtreme?.DailyHigh?.TemperatureInfo
+        ?.AirTemperature ?? "N/A",
+    lowestTemp:
+      weatherElement?.DailyExtreme?.DailyLow?.TemperatureInfo?.AirTemperature ??
+      "N/A",
+    DateTime:
+      weatherElement?.DailyExtreme?.DailyHigh?.TemperatureInfo?.Occurred_at
+        ?.DateTime ?? "N/A",
   };
 }
 
 const webServerPort = 3000;
 
-
-
 Bun.serve({
   port: webServerPort,
   routes: {
     "/weather": async (req) => {
-      return Response.json(      {
-        message: "ERR_NO_LOCATION_DATA",
-        how: "You can use api.json to check for the location data."
-      },
-      {
-        status: 404,
-      },);
+      return Response.json(
+        {
+          message: "ERR_NO_LOCATION_DATA",
+          how: "You can use api.json to check for the location data.",
+        },
+        {
+          status: 404,
+        },
+      );
     },
     "/weather/:stationName": async (req) => {
-        const stationName = req.params.stationName;
+      const stationName = req.params.stationName;
       return Response.json(await fetchAPI(stationName));
     },
     "/*": Response.json(

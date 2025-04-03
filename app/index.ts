@@ -3,15 +3,13 @@ import fs from "node:fs";
 
 const webServerPort = 3000;
 
-
-
 Bun.serve({
   port: webServerPort,
   routes: {
     "/weather/:lat/:long": async (req) => {
       const lat = req.params.lat;
-      const long =  req.params.long;
-      console.log(`lat: ${lat}, long: ${long}`)
+      const long = req.params.long;
+      console.log(`lat: ${lat}, long: ${long}`);
       return Response.json(await fetchAPI(lat, long));
     },
     "/weather/": Response.json(
