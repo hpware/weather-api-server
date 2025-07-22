@@ -5,7 +5,6 @@
   "scripts": {
     "app": "bun run app/index.ts",
     "clean": "prettier . --write",
-  // This is for if you want to hardcode a location
     "hardcoded": "bun run app/hardcoded"
   },
   
